@@ -8,6 +8,9 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
+import { useSearchParams } from "react-router-dom";
+import { sendWorkoutPlanRequest } from "@/services/api";
+
 
 const workouts = [
   {
@@ -141,8 +144,19 @@ const workouts = [
 ];
 
 export default function Workout() {
+<<<<<<< Updated upstream
   const [workoutVideos, setWorkoutVideos] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+=======
+  const [workoutVideo, setWorkoutVideo] = useState("potato");
+  const [params] = useSearchParams();
+  const difficulty = params.get("difficulty") || "beginner";
+  const type_workout = params.get("type_workout") || "Weightlifting";
+  const num_days = params.get("num_days") || 4;
+
+
+
+>>>>>>> Stashed changes
 
   const getWorkout = (exercise) => {
     const pattern = /\([^)]*\)/g;
