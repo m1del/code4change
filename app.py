@@ -10,6 +10,7 @@ CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
 load_dotenv()
 
 OPENAI_SECRET = os.getenv("OPENAI_SECRET")
+YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
 
 @app.route('/chat', methods=['POST'])
 def chat():
@@ -38,6 +39,34 @@ def chat():
     else:
         error_info = {
             "error": "Failed to communicate with OpenAI API",
+            "status_code": response.status_code,
+            "response_body": response.text
+        }
+        return jsonify(error_info), response.status_code
+
+@app.route('/searchYoutubeVideos', methods=['GET'])
+def search_youtube_videos():
+    query = request.args.get('query')
+    if not query:
+        return jsonify({"error": "No query provided"}), 400
+
+    YOUTUBE_SEARCH_URL = "https://www.googleapis.com/youtube/v3/search"
+    params = {
+        'part': 'snippet',
+        'maxResults': 5,
+        'q': query,
+        'type': 'video',
+        'key': YOUTUBE_API_KEY
+    }
+
+    response = requests.get(YOUTUBE_SEARCH_URL, params=params)
+
+    if response.status_code == 200:
+        youtube_response = response.json()
+        return jsonify(youtube_response['items']), 200
+    else:
+        error_info = {
+            "error": "Failed to communicate with YouTube API",
             "status_code": response.status_code,
             "response_body": response.text
         }
