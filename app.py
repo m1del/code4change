@@ -2,7 +2,10 @@ from flask import Flask, request, jsonify
 from dotenv import load_dotenv
 import os
 import requests
+from flask_cors import CORS
 
+
+CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
 app = Flask(__name__)
 
 load_dotenv()
