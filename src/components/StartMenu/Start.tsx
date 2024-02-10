@@ -18,7 +18,6 @@ export default function Start() {
               text="Beginner"
             />
           </FadeIn>
-
           <FadeIn direction="bottom" delay={0.45}>
             <Option icon={<FaSkull size={iconSize} />} text="Intermediate" />
           </FadeIn>
