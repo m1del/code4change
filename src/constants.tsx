@@ -1,4 +1,5 @@
-const prompt =
+export default function getPrompt(level: string | null, goal: string, numDays: string) {
+	const prompt =
 `I want you to act as a personal trainer. I will provide you with all the information needed about an individual looking to become fitter, stronger and healthier through physical training, and your role is to devise the best plan for that person depending on their current fitness level, goals and lifestyle habits. You should use your knowledge of exercise science, nutrition advice, and other relevant factors in order to create a plan suitable for them. Warm-up and Cool-down are required in every workout Include important notes relating to the workout. Use the relevant information in the text below and give the output in JSON format.
 
 Desired Format:
@@ -93,4 +94,8 @@ Other example Notes:
 - Proper nutrition and hydration are key components of any weight loss program. Encourage the individual to have a balanced diet consisting of lean proteins, whole grains, fruits, and vegetables, and to drink plenty of water.
 
 Text: “For a ${level} individual fitness, design an exercise program for ${goal} over ${numDays} days a week.”
+
+} 
 `
+return prompt
+}

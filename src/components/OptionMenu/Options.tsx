@@ -1,9 +1,9 @@
 import React from "react";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import FadeIn from "../Animation/FadeIn";
+import { sendWorkoutPlanRequest } from "@/services/api";
 
 import {
   Form,
@@ -22,6 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { useSearchParams } from "react-router-dom";
 
 const FormSchema = z.object({
   type_workout: z.string({
@@ -31,12 +32,17 @@ const FormSchema = z.object({
 });
 
 export default function Options() {
+  const [params] = useSearchParams('difficulty');
+  const difficulty = params.get('difficulty');
+
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
-  function onSubmit(values: z.infer<typeof FormSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof FormSchema>) {
+   const response = await sendWorkoutPlanRequest(difficulty, values.type_workout, values.num_days);
+   console.log(response['choices'][0]['message']['content'])
   }
 
   return (

@@ -1,9 +1,9 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS 
 from dotenv import load_dotenv
 import os
 import json
 import requests
-from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
@@ -30,7 +30,7 @@ def chat():
 
     payload = {
         'model': 'gpt-3.5-turbo',
-        'messages': messages,
+        'messages': prompt,
         'temperature': 0.7
     }
 
