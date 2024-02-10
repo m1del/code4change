@@ -3,38 +3,13 @@ import { Button } from "@/components/ui/button";
 import Start from "./components/StartMenu/Start";
 import Options from "./components/OptionMenu/Options";
 
-const Home = () => (
-  <div>
-    <h2>Home Page</h2>
-    <Button>Home Button</Button>
-  </div>
-);
-
-const About = () => (
-  <div>
-    <h2>About Page</h2>
-    <Button>About Button</Button>
-  </div>
-);
-
 export default function App() {
   return (
     <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-          </ul>
-        </nav>
-
+      <div className="text-secondary h-screen flex items-center justify-center pb-36 bg-primary">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/" element={<Start />} />
+          <Route path="/Options" element={<Options />} />
         </Routes>
       </div>
     </Router>
