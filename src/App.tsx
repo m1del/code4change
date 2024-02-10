@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import "./App.css";
+import Start from "./components/StartMenu/Start";
+import Options from "./components/OptionMenu/Options";
 
 const Home = () => (
   <div>
