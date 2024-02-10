@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { motion, useInView, useAnimation } from "framer-motion";
 
 interface Props {
-  direction: "left" | "right" | "top" | "bottom";
+  direction: "left" | "right" | "top" | "bottom" | "none";
   children: JSX.Element;
   width?: "fit-content" | "100%";
   delay?: number;
@@ -28,13 +28,13 @@ export const FadeIn = ({
   const hidden = { opacity: 0, x: 0, y: 0 };
 
   if (direction === "left") {
-    hidden.x = -400;
+    hidden.x = -100;
   } else if (direction === "right") {
-    hidden.x = 400;
+    hidden.x = 100;
   } else if (direction === "top") {
-    hidden.y = -400;
+    hidden.y = -100;
   } else if (direction === "bottom") {
-    hidden.y = 400;
+    hidden.y = 100;
   }
 
   return (
