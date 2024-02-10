@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import WorkoutDay from "./WorkoutDay";
 import {
   Carousel,
@@ -141,14 +141,32 @@ const workouts = [
 ];
 
 export default function Workout() {
-  const [workoutVideo, setWorkoutVideo] = useState("potato");
+  const [workoutVideos, setWorkoutVideos] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
   const getWorkout = (exercise) => {
     const pattern = /\([^)]*\)/g;
 
     // Use replace() method to remove text inside parentheses
     const result = exercise.replace(pattern, "");
     console.log(result.trim());
-    setWorkoutVideo(result.trim());
+    getWorkoutVideos(result.trim());
+  };
+
+  const getWorkoutVideos = async (exercise) => {
+    const pattern = /\([^)]*\)/g;
+    const result = exercise.replace(pattern, "").trim();
+    setSearchQuery(result); // store the query for the "See More" button
+
+    try {
+      const response = await fetch(
+        `http://localhost:5000/searchYoutubeVideos?query=${result}`,
+      );
+      const data = await response.json();
+      setWorkoutVideos(data);
+    } catch (error) {
+      console.error("Error fetching videos:", error);
+    }
   };
 
   return (
@@ -193,7 +211,31 @@ export default function Workout() {
           </div>
         </div>
         <div className="w-[50%] flex items-center justify-center">
-          {workoutVideo}
+          <div className="flex flex-col w-full items-center">
+            {workoutVideos.length > 0 && (
+              <iframe
+                width="560"
+                height="315"
+                src={`https://www.youtube.com/embed/${workoutVideos[0].id.videoId}`}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            )}
+
+            <button
+              onClick={() =>
+                window.open(
+                  `https://www.youtube.com/results?search_query=${searchQuery}`,
+                  "_blank",
+                )
+              }
+              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+            >
+              See More
+            </button>
+          </div>
         </div>
       </div>
     </div>

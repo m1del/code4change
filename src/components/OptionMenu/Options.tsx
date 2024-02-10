@@ -1,9 +1,12 @@
 import React from "react";
+
 import { zodResolver } from "@hookform/resolvers/zod";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { string, z } from "zod";
 import FadeIn from "../Animation/FadeIn";
 
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -12,7 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
+import { Input, Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -20,8 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { useSearchParams, useNavigate, createSearchParams } from "react-router-dom";
+import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
 
 const FormSchema = z.object({
   type_workout: z.string({
