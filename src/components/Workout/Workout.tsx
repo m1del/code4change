@@ -116,7 +116,7 @@ export default function Workout() {
         </div>
       </div>
       <div className="flex w-full bg-slate-950 px-16 rounded-xl">
-        <div className="flex flex-col gap-16 mt-16">
+        <div className="flex w-[50%] flex-col gap-16 mt-16">
           {workouts.map((workout, index) => (
             <WorkoutDay
               numDay={index + 1}
@@ -127,7 +127,7 @@ export default function Workout() {
             />
           ))}
         </div>
-        <div className="">potato</div>
+        <div className="w-[50%]">potato</div>
       </div>
     </div>
   );
