@@ -1,9 +1,8 @@
 import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { string, z } from "zod";
 import FadeIn from "../Animation/FadeIn";
-import { sendWorkoutPlanRequest } from "@/services/api";
 
 import {
   Form,
@@ -22,7 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate, createSearchParams } from "react-router-dom";
 
 const FormSchema = z.object({
   type_workout: z.string({
@@ -33,16 +32,25 @@ const FormSchema = z.object({
 
 export default function Options() {
   const [params] = useSearchParams('difficulty');
-  const difficulty = params.get('difficulty');
-
+  const difficulty = params.get('difficulty')?.toString() || "beginner";
+  const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
-  async function onSubmit(values: z.infer<typeof FormSchema>) {
-   const response = await sendWorkoutPlanRequest(difficulty, values.type_workout, values.num_days);
-   console.log(response['choices'][0]['message']['content'])
+  function onSubmit(values: z.infer<typeof FormSchema>) {
+    navigate({
+      pathname: "/workout",
+      search: createSearchParams({
+        difficulty: difficulty,
+        type_workout: values.type_workout,
+        num_days: values.num_days,
+      }).toString(),
+    });
+    
+  //  const response = await sendWorkoutPlanRequest(difficulty, values.type_workout, values.num_days);
+  //  console.log(response['choices'][0]['message']['content'])
   }
 
   return (

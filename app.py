@@ -21,8 +21,6 @@ def chat():
     if not messages:
         return jsonify({"error": "No messages provided"}), 400
 
-    print(messages)
-
     headers = {
         'Content-Type': 'application/json',
         'Authorization': f'Bearer {OPENAI_SECRET}'
@@ -30,7 +28,7 @@ def chat():
 
     payload = {
         'model': 'gpt-3.5-turbo',
-        'messages': prompt,
+        'messages': messages,
         'temperature': 0.7
     }
 
