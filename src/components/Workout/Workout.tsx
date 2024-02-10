@@ -144,11 +144,8 @@ const workouts = [
 ];
 
 export default function Workout() {
-<<<<<<< Updated upstream
   const [workoutVideos, setWorkoutVideos] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-=======
-  const [workoutVideo, setWorkoutVideo] = useState("potato");
   const [params] = useSearchParams();
   const difficulty = params.get("difficulty") || "beginner";
   const type_workout = params.get("type_workout") || "Weightlifting";
@@ -156,7 +153,7 @@ export default function Workout() {
 
 
 
->>>>>>> Stashed changes
+
 
   const getWorkout = (exercise) => {
     const pattern = /\([^)]*\)/g;
