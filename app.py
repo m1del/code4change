@@ -4,9 +4,8 @@ import os
 import requests
 from flask_cors import CORS
 
-
-CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
 
 load_dotenv()
 
