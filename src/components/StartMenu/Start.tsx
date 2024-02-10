@@ -8,7 +8,7 @@ export default function Start() {
   const iconSize = "2.5rem";
   return (
     <FadeIn direction="none">
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center h-screen justify-center pb-36">
         <h1 className="text-4xl mb-20 font-semibold">Gym Genius</h1>
         <p className="text-xl mb-16">Choose your level to start:</p>
         <div className="flex gap-16 text-xl">

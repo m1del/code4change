@@ -40,7 +40,7 @@ export default function Options() {
   }
 
   return (
-    <div className="flex flex-col w-[40%]">
+    <div className="flex flex-col w-[40%] h-screen justify-center pb-36">
       <h3 className="text-3xl mb-10">Tell us a bit more:</h3>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
