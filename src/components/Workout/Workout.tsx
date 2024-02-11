@@ -153,17 +153,19 @@ export default function Workout() {
                   ></iframe>
                 )}
 
-                <button
-                  onClick={() =>
-                    window.open(
-                      `https://www.youtube.com/results?search_query=${searchQuery}`,
-                      "_blank",
-                    )
-                  }
-                  className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
-                >
-                  See More
-                </button>
+                {workoutVideos.length > 0 && (
+                  <button
+                    onClick={() =>
+                      window.open(
+                        `https://www.youtube.com/results?search_query=${searchQuery}`,
+                        "_blank",
+                      )
+                    }
+                    className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+                  >
+                    See More
+                  </button>
+                )}
               </div>
             </FadeIn>
           </div>
