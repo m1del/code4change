@@ -81,7 +81,6 @@ def search_youtube_videos():
 @app.route('/generateWorkoutPlan', methods=['POST'])
 def generate_workout_plan():
     data = request.get_json()
-    print(data)
     level = data.get('level')
     goal = data.get('goal')
     numDays = data.get('numDays')
