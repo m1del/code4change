@@ -149,6 +149,7 @@ export default function Workout() {
   const [workoutVideos, setWorkoutVideos] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const difficulty = params.get("difficulty") || "beginner";
+  const fix = difficulty[0].toUpperCase() + difficulty.slice(1);
   const type_workout = params.get("type_workout") || "Weightlifting";
   const num_days = params.get("num_days") || "4";
   const navigate = useNavigate();
@@ -216,8 +217,13 @@ export default function Workout() {
       <div className="flex flex-col w-full items-center">
         <h1 className="text-4xl font-bold pb-6">Workout Plan</h1>
         <div className="flex flex-col items-center text-xl font-semibold mb-4">
+<<<<<<< Updated upstream
           <h2>Difficulty: {difficulty}</h2>
           <h2>Days a week: {num_days}</h2>
+=======
+          <h2>Difficulty: {fix}</h2>
+          <h2>Days a Week: {num_days}</h2>
+>>>>>>> Stashed changes
           <h2>Focus: {type_workout}</h2>
         </div>
       </div>

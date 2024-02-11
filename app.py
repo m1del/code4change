@@ -7,7 +7,7 @@ import requests
 from openai import OpenAI
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
+CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5173"}})
 
 load_dotenv()
 
