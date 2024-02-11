@@ -9,9 +9,9 @@ import {
   FormProvider,
   useFormContext,
 } from "react-hook-form";
-
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
+import { FadeIn } from "../Animation/FadeIn";
 
 const Form = FormProvider;
 
@@ -91,12 +91,14 @@ const FormLabel = React.forwardRef<
   const { error, formItemId } = useFormField();
 
   return (
-    <Label
-      ref={ref}
-      className={cn(error && "text-destructive", className)}
-      htmlFor={formItemId}
-      {...props}
-    />
+    <FadeIn direction="left" width="100%" delay={props.delay}>
+      <Label
+        ref={ref}
+        className={cn(error && "text-destructive", className)}
+        htmlFor={formItemId}
+        {...props}
+      />
+    </FadeIn>
   );
 });
 FormLabel.displayName = "FormLabel";

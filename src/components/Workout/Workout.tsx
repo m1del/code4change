@@ -11,7 +11,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useSearchParams } from "react-router-dom";
 import { sendWorkoutPlanRequest } from "@/services/api";
 
-
 const workouts = [
   {
     day: "Monday",
@@ -151,10 +150,6 @@ export default function Workout() {
   const type_workout = params.get("type_workout") || "Weightlifting";
   const num_days = params.get("num_days") || 4;
 
-
-
-
-
   const getWorkout = (exercise) => {
     const pattern = /\([^)]*\)/g;
 
@@ -171,7 +166,7 @@ export default function Workout() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/searchYoutubeVideos?query=${result}`,
+        `http://127.0.0.1:5000/searchYoutubeVideos?query=${result}`
       );
       const data = await response.json();
       setWorkoutVideos(data);
@@ -239,7 +234,7 @@ export default function Workout() {
               onClick={() =>
                 window.open(
                   `https://www.youtube.com/results?search_query=${searchQuery}`,
-                  "_blank",
+                  "_blank"
                 )
               }
               className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
