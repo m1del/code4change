@@ -92,6 +92,8 @@ export default function Options() {
                       </SelectItem>
                       <SelectItem value="Cardio">Cardio</SelectItem>
                       <SelectItem value="Calisthenics">Calisthenics</SelectItem>
+                      <SelectItem value="HIIT">HIIT</SelectItem>
+                      <SelectItem value="Yoga">Yoga</SelectItem>
                     </SelectContent>
                   </Select>
                 </FadeIn>
@@ -114,7 +116,11 @@ export default function Options() {
           />
           <div className="w-full flex justify-center">
             <FadeIn direction="none">
-              <Button size="lg" onClick={() => onBack()} className="text-xl border-2 mr-8">
+              <Button
+                size="lg"
+                onClick={() => onBack()}
+                className="text-xl border-2 mr-8"
+              >
                 Go Back
               </Button>
               <Button size="lg" className="text-xl border-2">
