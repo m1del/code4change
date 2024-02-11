@@ -212,7 +212,6 @@ export default function Workout() {
   return (
     <div className="w-[70%] pt-16 h-screen">
       <FadeIn direction="none" width="100%">
-
       <div className="flex flex-col w-full items-center">
         <h1 className="text-4xl font-bold pb-6">Workout Plan</h1>
         <div className="flex flex-col items-center text-xl font-semibold mb-4">
