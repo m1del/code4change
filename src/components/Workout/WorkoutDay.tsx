@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function WorkoutDay({
   numDay,
   day,
@@ -28,7 +26,7 @@ export default function WorkoutDay({
             key={index}
             onClick={() => getWorkout(exercise.exercise)}
           >
-            {exercise.exercise} {exercise.description}
+            {exercise.exercise}: {exercise.description}
           </p>
         ))}
       </div>
@@ -36,9 +34,9 @@ export default function WorkoutDay({
       <p className="text-lg mb-8">{cool_down}</p>
       <h2 className="font-semibold text-xl mb-1">Notes:</h2>
       <div className="flex flex-col gap-1">
-        {notes.map((note, index) => (
+        {notes.map((noteObj, index) => (
           <p className="text-lg" key={index}>
-            {note}
+            {noteObj.note}{" "}
           </p>
         ))}
       </div>
