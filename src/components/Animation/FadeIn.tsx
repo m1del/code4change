@@ -43,7 +43,8 @@ export const FadeIn = ({
       style={{
         position: "relative",
         width,
-        margin: "auto",
+        marginLeft: "auto",
+        marginRight: "auto",
       }}
     >
       <motion.div

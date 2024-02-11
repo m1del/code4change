@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
+import { FadeIn } from "../Animation/FadeIn";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -55,9 +55,17 @@ export default function Options() {
     //  console.log(response['choices'][0]['message']['content'])
   }
 
+  function onBack() {
+    navigate({
+      pathname: "/",
+    });
+  }
+
   return (
     <div className="flex flex-col w-[40%] h-screen justify-center pb-36">
-      <h3 className="text-3xl mb-10">Tell us a bit more:</h3>
+      <FadeIn direction="none">
+        <h3 className="text-3xl mb-5">Tell us a bit more:</h3>
+      </FadeIn>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
@@ -65,22 +73,28 @@ export default function Options() {
             name="type_workout"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-lg">Type of Workout</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a workout type" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="Weightlifting">Weightlifting</SelectItem>
-                    <SelectItem value="Cardio">Cardio</SelectItem>
-                    <SelectItem value="Calisthenics">Calisthenics</SelectItem>
-                  </SelectContent>
-                </Select>
+                <FormLabel delay={0.75} className="text-lg">
+                  Type of Workout
+                </FormLabel>
+                <FadeIn direction="left" delay={0.65} width="100%">
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a workout type" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="Weightlifting">
+                        Weightlifting
+                      </SelectItem>
+                      <SelectItem value="Cardio">Cardio</SelectItem>
+                      <SelectItem value="Calisthenics">Calisthenics</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FadeIn>
                 <FormMessage />
               </FormItem>
             )}
@@ -90,16 +104,23 @@ export default function Options() {
             name="num_days"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-lg">Number of Days</FormLabel>
+                <FormLabel delay={0.35} className="text-lg">
+                  Number of Days
+                </FormLabel>
                 <Input type="number" {...field} />
                 <FormMessage />
               </FormItem>
             )}
           />
           <div className="w-full flex justify-center">
-            <Button size="lg" type="submit" className="text-xl border-2">
-              Submit
-            </Button>
+            <FadeIn direction="none">
+              <Button size="lg" onClick={() => onBack()} className="text-xl border-2 mr-8">
+                Go Back
+              </Button>
+              <Button size="lg" className="text-xl border-2">
+                Submit
+              </Button>
+            </FadeIn>
           </div>
         </form>
       </Form>
