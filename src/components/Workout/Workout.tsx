@@ -7,9 +7,11 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import {Button} from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { sendWorkoutPlanRequest } from "@/services/api";
+import {FadeIn} from "../Animation/FadeIn";
 
 // const workouts = [
 // {
@@ -149,6 +151,7 @@ export default function Workout() {
   const difficulty = params.get("difficulty") || "beginner";
   const type_workout = params.get("type_workout") || "Weightlifting";
   const num_days = params.get("num_days") || "4";
+  const navigate = useNavigate();
 
   async function getResponse(
     difficulty: string,
@@ -200,8 +203,16 @@ export default function Workout() {
     }
   };
 
+  function onBack() {
+    navigate({
+      pathname: "/",
+    });
+  }
+
   return (
     <div className="w-[70%] pt-16 h-screen">
+      <FadeIn direction="none" width="100%">
+
       <div className="flex flex-col w-full items-center">
         <h1 className="text-4xl font-bold pb-6">Workout Plan</h1>
         <div className="flex flex-col items-center text-xl font-semibold mb-4">
@@ -210,6 +221,7 @@ export default function Workout() {
           <h2>Focus: {type_workout}</h2>
         </div>
       </div>
+      <Button onClick = {() => onBack()}variant="secondary">Return to Start</Button>
       <div className="flex w-full bg-slate-950 rounded-xl h-[90%]">
         <div className="flex w-[50%] flex-col gap-16 mt-16 overflow-scroll pb-20 px-14">
           <div className="w-full">
@@ -220,7 +232,9 @@ export default function Workout() {
                     <div className="p-1">
                       <Card>
                         <CardContent className="flex aspect-square items-center justify-center p-6">
-                          Potatoes
+                          <FadeIn direction="top" delay={0.55}>
+                          <div className="loader"></div>
+                          </FadeIn>
                         </CardContent>
                       </Card>
                     </div>
@@ -254,6 +268,7 @@ export default function Workout() {
           </div>
         </div>
         <div className="w-[50%] flex items-center justify-center">
+          <FadeIn width="100%" direction="bottom" delay={0.75}>
           <div className="flex flex-col w-full items-center">
             {workoutVideos.length > 0 && (
               <iframe
@@ -279,8 +294,10 @@ export default function Workout() {
               See More
             </button>
           </div>
+          </FadeIn>
         </div>
       </div>
+      </FadeIn>
     </div>
   );
 }

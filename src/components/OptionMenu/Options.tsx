@@ -55,6 +55,12 @@ export default function Options() {
     //  console.log(response['choices'][0]['message']['content'])
   }
 
+  function onBack() {
+    navigate({
+      pathname: "/",
+    });
+  }
+
   return (
     <div className="flex flex-col w-[40%] h-screen justify-center pb-36">
       <FadeIn direction="none">
@@ -108,7 +114,10 @@ export default function Options() {
           />
           <div className="w-full flex justify-center">
             <FadeIn direction="none">
-              <Button size="lg" type="submit" className="text-xl border-2">
+              <Button size="lg" onClick={() => onBack()} className="text-xl border-2 mr-8">
+                Go Back
+              </Button>
+              <Button size="lg" className="text-xl border-2">
                 Submit
               </Button>
             </FadeIn>
