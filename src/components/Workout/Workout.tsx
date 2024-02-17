@@ -10,7 +10,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { sendWorkoutPlanRequest } from "@/services/api";
 import { FadeIn } from "../Animation/FadeIn";
 
 export default function Workout() {
