@@ -62,9 +62,9 @@ export default function Options() {
   }
 
   return (
-    <div className="flex flex-col w-[40%] h-screen justify-center pb-36">
+    <div className="flex flex-col w-[65%] sm:w-[40%] h-screen justify-center pb-36">
       <FadeIn direction="none">
-        <h3 className="text-3xl mb-5">Tell us a bit more:</h3>
+        <h3 className="text-2xl sm:text-3xl mb-5">Tell us a bit more:</h3>
       </FadeIn>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -107,27 +107,27 @@ export default function Options() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel delay={0.35} className="text-lg">
-                  Number of Days
+                  Number of Gym Days
                 </FormLabel>
                 <Input type="number" {...field} />
                 <FormMessage />
               </FormItem>
             )}
           />
-          <div className="w-full flex justify-center">
-            <FadeIn direction="none">
+          <FadeIn direction="none">
+            <div className="w-full flex md:flex-row gap-6 md:gap-8 flex-col justify-center">
               <Button
                 size="lg"
                 onClick={() => onBack()}
-                className="text-xl border-2 mr-8"
+                className="text-xl border-2"
               >
                 Go Back
               </Button>
               <Button size="lg" className="text-xl border-2">
                 Submit
               </Button>
-            </FadeIn>
-          </div>
+            </div>
+          </FadeIn>
         </form>
       </Form>
     </div>

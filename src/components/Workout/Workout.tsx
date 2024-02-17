@@ -26,12 +26,12 @@ export default function Workout() {
   async function getResponse(
     difficulty: string,
     type_workout: string,
-    num_days: string,
+    num_days: string
   ) {
     const response = await sendWorkoutPlanRequest(
       difficulty,
       type_workout,
-      num_days,
+      num_days
     );
     // console.log(typeof JSON.parse(response['choices'][0]['message']['content']));
     const parse = JSON.parse(response["choices"][0]["message"]["content"]);
@@ -64,7 +64,7 @@ export default function Workout() {
 
     try {
       const response = await fetch(
-        `http://127.0.0.1:5000/searchYoutubeVideos?query=${result}`,
+        `http://localhost:5000/searchYoutubeVideos?query=${result}`
       );
       const data = await response.json();
       setWorkoutVideos(data);
@@ -80,7 +80,7 @@ export default function Workout() {
   }
 
   return (
-    <div className="w-[70%] pt-16 h-screen">
+    <div className="w-full max-w-screen-xl pt-16">
       <FadeIn direction="none" width="100%">
         <div className="flex flex-col w-full items-center">
           <h1 className="text-4xl font-bold pb-6">Workout Plan</h1>
@@ -93,8 +93,8 @@ export default function Workout() {
         <Button onClick={() => onBack()} variant="secondary">
           Return to Start
         </Button>
-        <div className="flex w-full bg-slate-950 rounded-xl h-[90%]">
-          <div className="flex w-[50%] flex-col gap-16 mt-16 overflow-scroll pb-20 px-14">
+        <div className="lg:flex-row flex-col flex w-full bg-slate-950 rounded-xl h-[90%] mb-24">
+          <div className="flex w-full lg:w-[50%] flex-col gap-16 mt-16 overflow-scroll lg:pb-20 px-10 lg:px-14">
             <div className="w-full">
               <Carousel>
                 <CarouselContent>
@@ -138,13 +138,12 @@ export default function Workout() {
               </Carousel>
             </div>
           </div>
-          <div className="w-[50%] flex items-center justify-center">
+          <div className="lg:w-[50%] flex items-center justify-center">
             <FadeIn width="100%" direction="bottom" delay={0.75}>
               <div className="flex flex-col w-full items-center">
                 {workoutVideos.length > 0 && (
                   <iframe
-                    width="560"
-                    height="315"
+                    className=" w-[400px] md:w-[450px] xl:w-[500px] aspect-video"
                     src={`https://www.youtube.com/embed/${workoutVideos[0].id.videoId}`}
                     title="YouTube video player"
                     frameBorder="0"
@@ -158,7 +157,7 @@ export default function Workout() {
                     onClick={() =>
                       window.open(
                         `https://www.youtube.com/results?search_query=${searchQuery}`,
-                        "_blank",
+                        "_blank"
                       )
                     }
                     className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
