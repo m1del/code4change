@@ -23,35 +23,70 @@ export default function Workout() {
   const num_days = params.get("num_days") || "4";
   const navigate = useNavigate();
 
-  async function getResponse(
-    difficulty: string,
-    type_workout: string,
-    num_days: string,
-  ) {
-    const response = await sendWorkoutPlanRequest(
-      difficulty,
-      type_workout,
-      num_days,
-    );
-    // console.log(typeof JSON.parse(response['choices'][0]['message']['content']));
-    const parse = JSON.parse(response["choices"][0]["message"]["content"]);
-    console.log(parse);
-    setWorkouts(parse);
-    setLoaded(true);
-    return parse;
-  }
-  useEffect(() => {
-    getResponse(difficulty, type_workout, num_days);
-  }, []);
+  // async function getResponse(
+  //   difficulty: string,
+  //   type_workout: string,
+  //   num_days: string,
+  // ) {
+  //   const response = await sendWorkoutPlanRequest(
+  //     difficulty,
+  //     type_workout,
+  //     num_days,
+  //   );
+  //   // console.log(typeof JSON.parse(response['choices'][0]['message']['content']));
+  //   const parse = JSON.parse(response["choices"][0]["message"]["content"]);
+  //   console.log(parse);
+  //   setWorkouts(parse);
+  //   setLoaded(true);
+  //   return parse;
+  // }
+  // useEffect(() => {
+  //   getResponse(difficulty, type_workout, num_days);
+  // }, []);
   const [loaded, setLoaded] = useState(false);
   const [workouts, setWorkouts] = useState([]);
 
-  // const workouts = await getResponse(difficulty, type_workout, num_days);
+  useEffect(() => {
+    const eventSource = new EventSource(
+      `http://127.0.0.1:5000/generateWorkoutPlan?level=${difficulty}&goal=${type_workout}&numDay=${num_days}`,
+    );
+    let currentWorkoutChunk = "";
+
+    eventSource.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+
+      // Ensure that 'message' exists and is not null before proceeding
+      if (data && data.message) {
+        currentWorkoutChunk += data.message;
+
+        // Check for a potential end of a workout object message
+        // Assuming '}' signifies the end of a JSON object in your stream
+        if (data.message.trim().endsWith("}")) {
+          try {
+            // Parse the accumulated string as JSON and add to workouts
+            const workoutObject = JSON.parse(currentWorkoutChunk);
+            setWorkouts((prevWorkouts) => [...prevWorkouts, workoutObject]);
+            currentWorkoutChunk = ""; // Reset for the next workout object
+          } catch (error) {
+            console.error("Error parsing workout data:", error);
+          }
+        }
+      }
+    };
+
+    eventSource.onerror = (error) => {
+      console.error("EventSource failed:", error);
+      eventSource.close();
+      setLoaded(true); // Mark as loaded even if there was an error
+    };
+
+    return () => {
+      eventSource.close();
+    };
+  }, [difficulty, type_workout, num_days]);
 
   const getWorkout = (exercise) => {
     const pattern = /\([^)]*\)/g;
-
-    // Use replace() method to remove text inside parentheses
     const result = exercise.replace(pattern, "");
     console.log(result.trim());
     getWorkoutVideos(result.trim());

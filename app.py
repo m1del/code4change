@@ -78,12 +78,16 @@ def search_youtube_videos():
         }
         return jsonify(error_info), response.status_code
 
-@app.route('/generateWorkoutPlan', methods=['POST'])
+@app.route('/generateWorkoutPlan', methods=['GET'])
 def generate_workout_plan():
-    data = request.get_json()
-    level = data.get('level')
-    goal = data.get('goal')
-    numDays = data.get('numDays')
+    print(request.args)
+    # level = data.get('level')
+    # goal = data.get('goal')
+    # numDays = data.get('numDays')
+
+    level = request.args.get('level')
+    goal = request.args.get('goal')
+    numDays = request.args.get('numDays')
 
     if not (level and goal and numDays):
         return jsonify({"error": "Missing required information (level, goal, numDays)"}), 400
