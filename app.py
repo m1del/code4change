@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import os
 import json 
 import requests
+import uuid
 from openai import OpenAI
 
 app = Flask(__name__)
@@ -78,41 +79,83 @@ def search_youtube_videos():
         }
         return jsonify(error_info), response.status_code
 
+
+
+
+sessions = {}
+
 @app.route('/generateWorkoutPlan', methods=['GET'])
 def generate_workout_plan():
-    print(request.args)
-    # level = data.get('level')
-    # goal = data.get('goal')
-    # numDays = data.get('numDays')
+    session_id = request.args.get('session_id')
+    if not session_id or session_id not in sessions:
+        return jsonify({"error": "Invalid session ID"}), 400
 
-    level = request.args.get('level')
-    goal = request.args.get('goal')
-    numDays = request.args.get('numDays')
+    data = sessions[session_id]
 
-    if not (level and goal and numDays):
-        return jsonify({"error": "Missing required information (level, goal, numDays)"}), 400
+    # Extract data from session
+    level = data.get('level', 'average')
+    goal = data.get('goal', 'general fitness')
+    num_days = data.get('num_days', 3)
+    notes = data.get('notes', 'The individual is of average fitness levels.')
 
     system_prompt = f"""I want you to act as a personal trainer. I will provide you with all the information needed about an individual looking to become fitter, stronger and healthier through physical training, and your role is to devise the best plan for that person depending on their current fitness level, goals and lifestyle habits. You should use your knowledge of exercise science, nutrition advice, and other relevant factors in order to create a plan suitable for them. Warm-up and Cool-down are required in every workout. Include important notes relating to the workout. Use the relevant information in the text below and give the output in JSON format.
 
 Desired Format:
-“Day”: “$(Day of Week)”
-“Name”: “$(Workout Name)”
-“Warm-up”: “$(Warm up information)”
-“$(For exercises in workout):”
-- “$(Workout name)”: “$(Workout description)”
-“Cool-Down”: “$(Cool down information)”
-(If Notes):
-“Notes”: $(Important Notes)
+“day”: “${{day of week}}”
+“name”: “${{workout name}}”
+“warm-up”: “${{warm up information}}”
+“${{for exercises in workout}}:”
+- “${{workout name}}”: “${{workout description}}”
+“cool-down”: “${{cool down information}}”
+(if notes):
+“notes”: [${{notes}}]
 
-Example input text: “For an advanced individual in fitness, design an exercise program for weightlifting over 2 days a week.”
-Example formatted output: [ ... ]
-
+Example input text: “For an advanced individual in fitness, design an exercise program for weightlifting over 1 days a week.”
+Example formatted output: [
+    {{
+            "day": "Monday",
+            "name": "Full Body Strength Training",
+            "warm-up": "5-10 minutes of light cardio (e.g., brisk walking or cycling)",
+            "exercises": [
+                {{
+                    "exercise": "Barbell Squats",
+                    "description": "3 sets of 8-10 reps"
+                }},
+                {{
+                    "exercise": "Dumbbell Bench Press",
+                    "description": "3 sets of 8-10 reps"
+                }},
+                {{
+                    "exercise": "Deadlifts",
+                    "description": "3 sets of 8-10 reps"
+                }},
+                {{
+                    "exercise": "Lat Pulldowns",
+                    "description": "3 sets of 8-10 reps"
+                }},
+                {{
+                    "exercise": "Overhead Dumbbell Shoulder Press",
+                    "description": "3 sets of 8-10 reps"
+                }},
+                {{
+                    "exercise": "Plank",
+                    "description": "3 sets, hold for 30-60 seconds"
+                }}
+            ],
+            "cool-down": "5-10 minutes of stretching",
+            "notes": [
+                {{
+                "note": "Barbell Squats require a lot of hip and ankle mobility. Make sure you are stretching properly!"
+                }}
+            ]
+    }}
+]
 Other example Notes:
 - Cardio interval training is effective for burning calories and boosting cardiovascular fitness.
 - Rest days are equally important for recovery, so make sure to include rest days in between workout days.
 - Proper nutrition and hydration are key components of any weight loss program. Encourage the individual to have a balanced diet consisting of lean proteins, whole grains, fruits, and vegetables, and to drink plenty of water."""
 
-    user_prompt = f"Text: “For a {level} individual in fitness, design an exercise program for {goal} over {numDays} days a week.”"
+    user_prompt = f"Text: “For a {level} individual in fitness, design an exercise program for {goal} over {num_days} days a week. Keep these considerations in mind:\n {notes}”"
 
     messages = [
         {"role": "system", "content": system_prompt},
@@ -135,6 +178,12 @@ Other example Notes:
                 yield f"data: {json.dumps({'error': 'Failed to communicate with OpenAI API', 'details': str(e)})}\n\n"
     return Response(stream_with_context(generate_stream(client, messages)), mimetype='text/event-stream')
 
+@app.route('/setupWorkoutPlan', methods=['POST'])
+def setup_workout_plan():
+    data = request.get_json()
+    session_id = str(uuid.uuid4())
+    sessions[session_id] = data
+    return jsonify({"session_id": session_id})
 
 if __name__ == '__main__':
     app.run(debug=True)

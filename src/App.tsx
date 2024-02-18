@@ -1,8 +1,8 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Start from "./components/StartMenu/Start";
 import Options from "./components/OptionMenu/Options";
 import Workout from "./components/Workout/Workout";
+import WorkoutPlanStream from "./pages/WorkoutPlanStream";
 
 export default function App() {
   return (
@@ -12,6 +12,7 @@ export default function App() {
           <Route path="/" element={<Start />} />
           <Route path="/options" element={<Options />} />
           <Route path="/workout" element={<Workout />} />
+          <Route path="/test" element={<WorkoutPlanStream />} />
         </Routes>
       </div>
     </Router>
