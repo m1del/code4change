@@ -1,19 +1,26 @@
 import { createSearchParams, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import OptionContext from "../../context/OptionContext";
 
 interface Props {
   icon: JSX.Element;
   text: string;
 }
 
-export default function Option({ icon, text }: Props) {
+export default function StartSelection({ icon, text }: Props) {
   const navigate = useNavigate();
+  const { goal, num_days, notes, setOptions } = useContext(OptionContext);
 
   const HandleNavigate = () => {
+    setOptions({
+      level: text.toLowerCase(),
+      goal: goal,
+      num_days: num_days,
+      notes: notes,
+      setOptions,
+    });
     navigate({
       pathname: "/options",
-      search: createSearchParams({
-        difficulty: text.toLowerCase(),
-      }).toString(),
     });
   };
 
