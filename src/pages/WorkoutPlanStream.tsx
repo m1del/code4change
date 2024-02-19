@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 
 interface Exercise {
   name: string;
@@ -129,7 +130,7 @@ const WorkoutPlanComponent: React.FC = () => {
   }, []);
 
   const fetchYoutubeVideos = async (exerciseName: string) => {
-    console.log(exerciseName);
+    setSearchQuery(exerciseName); // store query for the "See More" button
     const response = await fetch(
       `http://localhost:5000/searchYoutubeVideos?query=${encodeURIComponent(exerciseName)}`,
     );
@@ -190,6 +191,16 @@ const WorkoutPlanComponent: React.FC = () => {
             ></iframe>
           </div>
         ))}
+        <Button
+          onClick={() =>
+            window.open(
+              `https://www.youtube.com/results?search_query=${searchQuery}`,
+              "_blank",
+            )
+          }
+        >
+          See More
+        </Button>
       </div>
     </div>
   );
