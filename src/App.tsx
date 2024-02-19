@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Start from "./components/StartMenu/Start";
 import Options from "./components/OptionMenu/Options";
 import Workout from "./components/Workout/Workout";
-<<<<<<< HEAD
 import OptionsContext from "./context/OptionContext";
 import { useState } from "react";
 
@@ -12,9 +11,7 @@ interface Options {
   num_days: number;
   notes: string;
 }
-=======
 import WorkoutPlanStream from "./pages/WorkoutPlanStream";
->>>>>>> main
 
 export default function App() {
   const [options, setOptions] = useState<Options>({
@@ -25,7 +22,6 @@ export default function App() {
   });
 
   return (
-<<<<<<< HEAD
     <OptionsContext.Provider
       value={{
         level: options.level,
@@ -41,21 +37,10 @@ export default function App() {
             <Route path="/" element={<Start />} />
             <Route path="/options" element={<Options />} />
             <Route path="/workout" element={<Workout />} />
+            <Route path="/test" element={<WorkoutPlanStream />} />
           </Routes>
         </div>
       </Router>
     </OptionsContext.Provider>
-=======
-    <Router>
-      <div className="text-secondary flex items-center justify-center pb-36 bg-primary">
-        <Routes>
-          <Route path="/" element={<Start />} />
-          <Route path="/options" element={<Options />} />
-          <Route path="/workout" element={<Workout />} />
-          <Route path="/test" element={<WorkoutPlanStream />} />
-        </Routes>
-      </div>
-    </Router>
->>>>>>> main
   );
 }
