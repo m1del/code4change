@@ -33,7 +33,7 @@ const WorkoutPlanComponent: React.FC = () => {
     const samplePayload = {
       level: "beginner",
       goal: "weightlifting",
-      num_days: 5,
+      num_days: 1,
       notes: "limited ankle mobility",
     };
     const setupAndFetchData = async () => {
@@ -128,19 +128,18 @@ const WorkoutPlanComponent: React.FC = () => {
     setupAndFetchData();
   }, []);
 
-  const getWorkoutVideos = async (exercise: string) => {
-    const pattern = /\([^)]*\)/g;
-    const result = exercise.replace(pattern, "").trim();
-    setSearchQuery(result); // storing query for "See More" button
-
-    try {
-      const response = await fetch(
-        `http://localhost:5000/searchYoutubeVideos?query=${encodeURIComponent(result)}`,
-      );
-      const data = await response.json();
-      setWorkoutVideos(data);
-    } catch (error) {
-      console.error("Error fetching videos:", error);
+  const fetchYoutubeVideos = async (exerciseName: string) => {
+    console.log(exerciseName);
+    const response = await fetch(
+      `http://localhost:5000/searchYoutubeVideos?query=${encodeURIComponent(exerciseName)}`,
+    );
+    if (response.ok) {
+      const videos: YoutubeVideo[] = await response.json();
+      setWorkoutVideos(videos);
+      console.log(videos);
+    } else {
+      console.error("Failed to fetch YouTube videos");
+      setWorkoutVideos([]);
     }
   };
 
@@ -157,7 +156,11 @@ const WorkoutPlanComponent: React.FC = () => {
             <h3>Exercises</h3>
             <ul>
               {plan.exercises.map((exercise, idx) => (
-                <li key={idx}>
+                <li
+                  key={idx}
+                  onClick={() => fetchYoutubeVideos(exercise.name)}
+                  style={{ cursor: "pointer" }}
+                >
                   <strong>{exercise.name}:</strong> {exercise.description}
                 </li>
               ))}
@@ -174,30 +177,19 @@ const WorkoutPlanComponent: React.FC = () => {
         ))}
       </div>
       <div>
-        {workoutVideos.length > 0 && (
-          <iframe
-            width="560"
-            height="315"
-            src={`https://www.youtube.com/embed/${workoutVideos[0].id.videoId}`}
-            title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-        )}
-
-        {workoutVideos.length > 0 && (
-          <button
-            onClick={() =>
-              window.open(
-                `https://www.youtube.com/results?search_query=${searchQuery}`,
-                "_blank",
-              )
-            }
-            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
-          >
-            See More
-          </button>
-        )}
+        {workoutVideos.map((video, index) => (
+          <div key={index}>
+            <h4>{video.snippet.title}</h4>
+            <iframe
+              width="560"
+              height="315"
+              src={`https://www.youtube.com/embed/${video.id.videoId}`}
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        ))}
       </div>
     </div>
   );
