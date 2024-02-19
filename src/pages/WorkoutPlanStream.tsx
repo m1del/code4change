@@ -96,13 +96,17 @@ const WorkoutPlanComponent: React.FC = () => {
                   .split(":")
                   .map((part) => part.trim());
                 currentPlan.exercises.push({ name, description });
-              } else if (key) {
-                // all other keys
-                if (key === "note") {
-                  currentPlan.notes.push(value);
-                } else {
-                  // reset for new day
-                  if (key === "day" && currentPlan.day) {
+              } else if (key === "note") {
+                currentPlan.notes.push(value);
+              } else {
+                if (["day", "name", "warm-up", "cool-down"].includes(key)) {
+                  const propertyKey = key as Exclude<
+                    keyof WorkoutPlan,
+                    "exercises" | "notes"
+                  >;
+
+                  // check if reset for new day
+                  if (propertyKey === "day" && currentPlan.day) {
                     setWorkoutPlans((prevPlans) => [...prevPlans, currentPlan]);
                     currentPlan = {
                       day: "",
@@ -112,8 +116,11 @@ const WorkoutPlanComponent: React.FC = () => {
                       "cool-down": "",
                       notes: [],
                     };
+                  } else {
+                    currentPlan[propertyKey] = value;
                   }
-                  currentPlan[key] = value;
+                } else {
+                  console.warn(`Unexpected key received: ${key}`);
                 }
               }
             });
