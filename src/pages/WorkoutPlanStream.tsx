@@ -284,28 +284,38 @@ const WorkoutPlanComponent: React.FC = () => {
             </div>
             <div className="lg:w-[50%] flex items-center justify-center">
               <FadeIn width="100%" direction="bottom" delay={0.75}>
-                <div className="flex flex-col w-full items-center">
-                  {workoutVideos.length > 0 && (
-                    <iframe
-                      className=" w-[400px] md:w-[450px] xl:w-[500px] aspect-video"
-                      src={`https://www.youtube.com/embed/${workoutVideos[0].id.videoId}`}
-                      title="YouTube video player"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
-                  )}
-                  {workoutVideos.length > 0 && (
-                    <Button
-                      className="text-xl bg-blue-500 hover:bg-blue-800 m-6 font-semibold py-2 px-4 rounded-lg shadow-md transition duration-200 ease-in-out transform hover:-translate-y-1"
-                      onClick={() =>
-                        window.open(
-                          `https://www.youtube.com/results?search_query=${searchQuery}`,
-                          "_blank",
-                        )
-                      }
-                    >
-                      See More
-                    </Button>
+                <div className="flex flex-col items-center w-full">
+                  {workoutVideos.length > 0 ? (
+                    <>
+                      {workoutVideos.map((video, index) => (
+                        <div key={index} className="mb-4">
+                          <h4 className="text-center text-lg">
+                            {video.snippet.title}
+                          </h4>
+                          <iframe
+                            width="560"
+                            height="315"
+                            src={`https://www.youtube.com/embed/${video.id.videoId}`}
+                            title="YouTube video player"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          ></iframe>
+                        </div>
+                      ))}{" "}
+                      <Button
+                        className="text-xl bg-blue-500 hover:bg-blue-800 m-6 font-semibold py-2 px-4 rounded-lg shadow-md transition duration-200 ease-in-out transform hover:-translate-y-1"
+                        onClick={() =>
+                          window.open(
+                            `https://www.youtube.com/results?search_query=${searchQuery}`,
+                            "_blank",
+                          )
+                        }
+                      >
+                        See More
+                      </Button>
+                    </>
+                  ) : (
+                    <p>Click an exercise to see the tutorial! xoxo &lt;3 </p>
                   )}
                 </div>
               </FadeIn>
