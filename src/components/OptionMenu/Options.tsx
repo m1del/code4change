@@ -70,7 +70,7 @@ export default function Options() {
     });
 
     navigate({
-      pathname: "/workout",
+      pathname: "/test",
     });
 
     //  const response = await sendWorkoutPlanRequest(difficulty, values.type_workout, values.num_days);
