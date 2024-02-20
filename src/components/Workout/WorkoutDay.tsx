@@ -40,7 +40,7 @@ export default function WorkoutDay({
                 console.log(exercises);
               }}
             >
-              {exercise.exercise}: {exercise.description}
+              {exercise.name}: {exercise.description}
             </p>
           ))}
       </div>
