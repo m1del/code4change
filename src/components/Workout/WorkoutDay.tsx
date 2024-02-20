@@ -1,5 +1,9 @@
+interface Exercise {
+  name: string;
+  description: string;
+}
+
 export default function WorkoutDay({
-  numDay,
   day,
   name,
   warm_up,
@@ -7,13 +11,19 @@ export default function WorkoutDay({
   cool_down,
   notes,
   getWorkout,
+}: {
+  day: string;
+  name: string;
+  warm_up: string;
+  exercises: Exercise[];
+  cool_down: string;
+  notes: string[];
+  getWorkout: any;
 }) {
   return (
     <div>
       <div className="flex flex-col items-center">
-        <h1 className="text-2xl font-semibold mb-1">
-          Day {numDay}: {day}
-        </h1>
+        <h1 className="text-2xl font-semibold mb-1">{day}</h1>
         <h2 className="pb-8">{name}</h2>
       </div>
       <h2 className="font-semibold text-xl mb-1">Warmup:</h2>
@@ -25,7 +35,10 @@ export default function WorkoutDay({
             <p
               className="hover:bg-primary-lighter hover:cursor-pointer text-lg"
               key={index}
-              onClick={() => getWorkout(exercise.exercise)}
+              onClick={() => {
+                getWorkout(exercise.name);
+                console.log(exercises);
+              }}
             >
               {exercise.exercise}: {exercise.description}
             </p>
@@ -36,10 +49,13 @@ export default function WorkoutDay({
       <h2 className="font-semibold text-xl mb-1">Notes:</h2>
       <div className="flex flex-col gap-1">
         {notes != null &&
-          notes.map((noteObj, index) => (
-            <p className="text-lg" key={index}>
-              {noteObj.note}{" "}
-            </p>
+          notes.map((note, index) => (
+            <div>
+              <p className="text-lg" key={index}>
+                {note}
+              </p>
+              <br />
+            </div>
           ))}
       </div>
     </div>

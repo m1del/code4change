@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FadeIn } from "../Animation/FadeIn";
 import { useContext } from "react";
 import OptionsContext from "../../context/OptionContext";
