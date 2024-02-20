@@ -156,6 +156,11 @@ This stays true for any category provided, even none stength or weightlifting re
 If a user's goal is "Yoga", the program should emphasize a holistic improvement in that category.
 If a user's goal is "Cardio" the program should provide a variety of ways a user can improve in this category, and so on.
 
+Consider this input:
+"Text: “For a advanced individual in fitness, design an exercise program for weightlifing over 3 days a week."
+The resulting plan should have a workout for 3 days of the week, spread out to allow for rest and recovery. For example, you may choose to spread the workout over Monday, Wednesday, and Saturday.
+Since the invdividual is advanced in a weightlifing category, the exercises should be difficult with higher weight and volume. There should be more exercises per day than a beginner would have.
+
 Include at least two notes for each day. Be considerate to the individual. Here are examples of notes:
 - Cardio interval training is effective for burning calories and boosting cardiovascular fitness.
 - Rest days are equally important for recovery, so make sure to include rest days in between workout days.
