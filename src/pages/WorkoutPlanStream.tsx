@@ -64,13 +64,13 @@ const WorkoutPlanComponent: React.FC = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(samplePayload),
-        }
+        },
       );
 
       if (setupResponse.ok) {
         const { session_id } = await setupResponse.json();
         const eventSource = new EventSource(
-          `http://localhost:5000/generateWorkoutPlan?session_id=${session_id}`
+          `http://localhost:5000/generateWorkoutPlan?session_id=${session_id}`,
         );
         let currentPlan: WorkoutPlan = {
           day: "",
@@ -158,8 +158,8 @@ const WorkoutPlanComponent: React.FC = () => {
     setSearchQuery(exerciseName); // store query for the "See More" button
     const response = await fetch(
       `http://localhost:5000/searchYoutubeVideos?query=${encodeURIComponent(
-        exerciseName
-      )}`
+        exerciseName,
+      )}`,
     );
     if (response.ok) {
       const videos: YoutubeVideo[] = await response.json();
@@ -290,24 +290,22 @@ const WorkoutPlanComponent: React.FC = () => {
                       className=" w-[400px] md:w-[450px] xl:w-[500px] aspect-video"
                       src={`https://www.youtube.com/embed/${workoutVideos[0].id.videoId}`}
                       title="YouTube video player"
-                      frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                     ></iframe>
                   )}
-
                   {workoutVideos.length > 0 && (
-                    <button
+                    <Button
+                      className="text-xl bg-blue-500 hover:bg-blue-800 m-6 font-semibold py-2 px-4 rounded-lg shadow-md transition duration-200 ease-in-out transform hover:-translate-y-1"
                       onClick={() =>
                         window.open(
                           `https://www.youtube.com/results?search_query=${searchQuery}`,
-                          "_blank"
+                          "_blank",
                         )
                       }
-                      className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
                     >
                       See More
-                    </button>
+                    </Button>
                   )}
                 </div>
               </FadeIn>
