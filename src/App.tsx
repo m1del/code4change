@@ -12,6 +12,7 @@ interface Options {
   notes: string;
 }
 import WorkoutPlanStream from "./pages/WorkoutPlanStream";
+import Test from "./pages/Test";
 
 export default function App() {
   const [options, setOptions] = useState<Options>({
@@ -38,6 +39,7 @@ export default function App() {
             <Route path="/options" element={<Options />} />
             <Route path="/workout" element={<Workout />} />
             <Route path="/test" element={<WorkoutPlanStream />} />
+            <Route path="/json" element={<Test />} />
           </Routes>
         </div>
       </Router>
